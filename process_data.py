@@ -253,11 +253,19 @@ def process_mtg_data(lookback_days=182, fmt='Modern'):
     oracleid_lookup = dict()
     for k, v in list(j.items()):
         if not v[0].get('isFunny'):
-            oracleid_lookup[k] = v[0]['identifiers']['scryfallOracleId']  
-            
-            # If we have a split card, also add the front name for robust behavior
-            if '//' in k:
-                oracleid_lookup[k.split('//')[0].strip()] = v[0]['identifiers']['scryfallOracleId']
+            # Handle for overloaded card names.
+            #
+            if v[0].get('name') not in ['Pick Your Poison', 'Red Herring', 'Unquenchable Fury']:
+                oracleid_lookup[k] = v[0]['identifiers']['scryfallOracleId']
+                
+                # If we have a split card, also add the front name for robust behavior
+                if '//' in k:
+                    oracleid_lookup[k.split('//')[0].strip()] = v[0]['identifiers']['scryfallOracleId']
+            else:
+                for face in v:
+                    if 'vintage' in face['legalities'].keys() and not face.get('isFunny'):
+                        oracleid_lookup[k] = face['identifiers']['scryfallOracleId']
+
     
     # Vectorize decks
     def merge_analyzer(deck):
