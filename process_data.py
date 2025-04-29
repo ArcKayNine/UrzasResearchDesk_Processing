@@ -160,7 +160,7 @@ def process_mtg_data(lookback_days=182, fmt='Modern'):
                     # Everything is fine.
                     #
                     deck_df['Invalid_WR'] = False
-                elif data['Rounds'] is not None:
+                elif data['Rounds'] is not None and len(data['Rounds']):
                     # We need to build the win rates from the individual rounds.
                     #
                     round_df = pd.concat([pd.DataFrame(r['Matches']) for r in data['Rounds']], ignore_index=True)
