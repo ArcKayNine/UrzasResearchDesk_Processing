@@ -34,7 +34,7 @@ jobs:
     - name: Clone MTGODecklistCache and AtomicCards.json
       run: |
         cd ../
-        git clone https://github.com/brossignol/MTGODecklistCache.git --depth 1
+        git clone https://github.com/fbettega/MTG_decklistcache.git --depth 1
         curl https://mtgjson.com/api/v5/AtomicCards.json > AtomicCards.json
         cd -
         

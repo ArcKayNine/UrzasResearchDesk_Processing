@@ -83,7 +83,7 @@ def fuzzy_join(df1, df2):
     
     return final_result
 
-def get_tournament_files(base_path='../MTGODecklistCache/Tournaments', lookback_days=365, fmt='modern'):
+def get_tournament_files(base_path='../MTG_decklistcache/Tournaments', lookback_days=365, fmt='modern'):
     """
     Find all modern tournament files from the last lookback_days.
     
@@ -136,7 +136,7 @@ def process_mtg_data(lookback_days=182, fmt='Modern'):
     df = pd.DataFrame()
     
     # Process tournament files
-    tournament_path = Path('../MTGODecklistCache/Tournaments/')
+    tournament_path = Path('../MTG_decklistcache/Tournaments/')
     # Add tqdm back here if needed.
     for path in get_tournament_files(tournament_path, lookback_days, fmt.lower()):
         try:
@@ -160,6 +160,7 @@ def process_mtg_data(lookback_days=182, fmt='Modern'):
                     # Everything is fine.
                     #
                     deck_df['Invalid_WR'] = False
+                # TODO: Need to fix the below, currently melee doesn't have round results.
                 elif data['Rounds'] is not None and len(data['Rounds']):
                     # We need to build the win rates from the individual rounds.
                     #
